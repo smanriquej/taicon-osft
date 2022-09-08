@@ -4,21 +4,21 @@ import axios from 'axios';
 import Products from '../../components/Products/Products';
 
 class ProductsPage extends Component {
-  state = { isLoading: true, products: [] };
+  state = { isLoading: true, indices: [] };
   componentDidMount() {
     this.fetchData();
   }
 
-  productDeleteHandler = productId => {
+  indiceDeleteHandler = indiceId => {
     axios
-      .delete('http://localhost:3100/products/' + productId)
+      .delete('http://localhost:3200/products/' + indiceId)
       .then(result => {
         console.log(result);
         this.fetchData();
       })
       .catch(err => {
         this.props.onError(
-          'Deleting the product failed. Please try again later'
+          'Deleting the indice failed. Please try again later'
         );
         console.log(err);
       });
@@ -26,30 +26,30 @@ class ProductsPage extends Component {
 
   fetchData = () => {
     axios
-      .get('http://localhost:3100/products')
-      .then(productsResponse => {
-        this.setState({ isLoading: false, products: productsResponse.data });
+      .get('http://localhost:3200/products')
+      .then(indicesResponse => {
+        this.setState({ isLoading: false, indices: indicesResponse.data });
       })
       .catch(err => {
-        this.setState({ isLoading: false, products: [] });
-        this.props.onError('Loading products failed. Please try again later');
+        this.setState({ isLoading: false, indices: [] });
+        this.props.onError('Loading indices failed. Please try again later');
         console.log(err);
       });
   }
 
   render() {
-    let content = <p>Loading products...</p>;
+    let content = <p>Loading indices...</p>;
 
-    if (!this.state.isLoading && this.state.products.length > 0) {
+    if (!this.state.isLoading && this.state.indices.length > 0) {
       content = (
         <Products
-          products={this.state.products}
-          onDeleteProduct={this.productDeleteHandler}
+          indices={this.state.indices}
+          onDeleteindice={this.indiceDeleteHandler}
         />
       );
     }
-    if (!this.state.isLoading && this.state.products.length === 0) {
-      content = <p>Found no products. Try again later.</p>;
+    if (!this.state.isLoading && this.state.indices.length === 0) {
+      content = <p>Found no indices. Try again later.</p>;
     }
     return <main>{content}</main>;
   }

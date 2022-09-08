@@ -1,7 +1,7 @@
 const mongodb = require('mongodb');
 
 const MongoClient = mongodb.MongoClient;
-const mongoDbUrl = 'mongodb+srv://usrDiscord:discordapp2022@cluster0.rftoc.mongodb.net/shop?retryWrites=true';
+const mongoDbUrl = 'mongodb+srv://usrUploadData:taiconsas.@cluster0.vbvxner.mongodb.net/palmares-osft?retryWrites=true';
 
 let _db;
 

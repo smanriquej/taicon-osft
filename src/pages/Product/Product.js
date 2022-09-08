@@ -4,43 +4,43 @@ import axios from 'axios';
 import './Product.css';
 
 class ProductPage extends Component {
-  state = { isLoading: true, product: null };
+  state = { isLoading: true, indice: null };
 
   componentDidMount() {
     axios
-      .get('http://localhost:3100/products/' + this.props.match.params.id)
-      .then(productResponse => {
-        this.setState({ isLoading: false, product: productResponse.data });
+      .get('http://localhost:3200/products/' + this.props.match.params.id)
+      .then(indiceResponse => {
+        this.setState({ isLoading: false, indice: indiceResponse.data });
       })
       .catch(err => {
         this.setState({ isLoading: false });
         console.log(err);
-        this.props.onError('Loading the product failed. Please try again later');
+        this.props.onError('Loading the indice failed. Please try again later');
       });
   }
 
   render() {
     let content = <p>Is loading...</p>;
 
-    if (!this.state.isLoading && this.state.product) {
+    if (!this.state.isLoading && this.state.indice) {
       content = (
         <main className="product-page">
-          <h1>{this.state.product.name}</h1>
-          <h2>{this.state.product.price}</h2>
-          <div
+          <h1>{this.state.indice.cod_indice}</h1>
+          <h2>{this.state.indice.nombre_cuoc_indice}</h2>
+          {/* <div
             className="product-page__image"
             style={{
-              backgroundImage: "url('" + this.state.product.image + "')"
+              backgroundImage: "url('" + this.state.indice.image + "')"
             }}
-          />
-          <p>{this.state.product.description}</p>
+          /> */}
+          {/* <p>{this.state.indice.description}</p> */}
         </main>
       );
     }
-    if (!this.state.isLoading && !this.state.product) {
+    if (!this.state.isLoading && !this.state.indice) {
       content = (
         <main>
-          <p>Found no product. Try again later.</p>
+          <p>Found no indice. Try again later.</p>
         </main>
       );
     }

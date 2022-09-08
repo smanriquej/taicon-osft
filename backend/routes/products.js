@@ -8,80 +8,26 @@ const ObjectId = mongodb.ObjectId;
 
 const router = Router();
 
-// const products = [
-//   {
-//     _id: 'fasdlk1j',
-//     name: 'Stylish Backpack',
-//     description:
-//       'A stylish backpack for the modern women or men. It easily fits all your stuff.',
-//     price: 79.99,
-//     image: 'http://localhost:3100/images/product-backpack.jpg'
-//   },
-//   {
-//     _id: 'asdgfs1',
-//     name: 'Lovely Earrings',
-//     description:
-//       "How could a man resist these lovely earrings? Right - he couldn't.",
-//     price: 129.59,
-//     image: 'http://localhost:3100/images/product-earrings.jpg'
-//   },
-//   {
-//     _id: 'askjll13',
-//     name: 'Working MacBook',
-//     description:
-//       'Yes, you got that right - this MacBook has the old, working keyboard. Time to get it!',
-//     price: 1799,
-//     image: 'http://localhost:3100/images/product-macbook.jpg'
-//   },
-//   {
-//     _id: 'sfhjk1lj21',
-//     name: 'Red Purse',
-//     description: 'A red purse. What is special about? It is red!',
-//     price: 159.89,
-//     image: 'http://localhost:3100/images/product-purse.jpg'
-//   },
-//   {
-//     _id: 'lkljlkk11',
-//     name: 'A T-Shirt',
-//     description:
-//       'Never be naked again! This T-Shirt can soon be yours. If you find that buy button.',
-//     price: 39.99,
-//     image: 'http://localhost:3100/images/product-shirt.jpg'
-//   },
-//   {
-//     _id: 'sajlfjal11',
-//     name: 'Cheap Watch',
-//     description: 'It actually is not cheap. But a watch!',
-//     price: 299.99,
-//     image: 'http://localhost:3100/images/product-watch.jpg'
-//   }
-// ];
-
-// Get list of products products
+// Get list of indiceArr indiceArr
 router.get('/', (req, res, next) => {
   const queryPage = req.query.page;
-  const pageSize = 2;
-  // let resultProducts = [...products];
-  // if (queryPage) {
-  //   resultProducts = products.slice(
-  //     (queryPage - 1) * pageSize,
-  //     queryPage * pageSize
-  //   );
-  // }
-  const products = [];
+  const pageSize = 100;
+  const indiceArr = [];
+  let cont = 0;
   db.getDb()
     .db()
-    .collection('products')
+    .collection('cuoc_indice01')
     .find()
-    .sort({price: -1})
-    // .skip((queryPage -1) * pageSize)
-    // .limit(pageSize)
-    .forEach(productDoc => {
-      productDoc.price = productDoc.price.toString();
-      products.push(productDoc);
+    .sort({ cod_indice: 1})
+    .limit(pageSize)
+    .forEach(indiceData => {
+      cont += 1;
+      console.log("cont: ", cont);
+      indiceArr.push(indiceData);
     })
     .then(result => {
-      res.status(200).json(products);
+      console.log('indiceArr.length', indiceArr.length);
+      res.status(200).json(indiceArr);
     })
     .catch(err => {
       console.log(err);
@@ -93,11 +39,10 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   db.getDb()
     .db()
-    .collection('products')
+    .collection('cuoc_indice01')
     .findOne({ _id: new ObjectId(req.params.id)})
-    .then(producDoc => {
-      producDoc.price = producDoc.price.toString();
-      res.status(200).json(producDoc);
+    .then(indiceData => {
+      res.status(200).json(indiceData);
     })
     .catch(err => {
       console.log(err);
@@ -117,7 +62,7 @@ router.post('', (req, res, next) => {
   };
   db.getDb()
     .db()
-    .collection('products')
+    .collection('cuoc_indice01')
     .insertOne(newProduct)
     .then(result => {
       res
@@ -139,8 +84,8 @@ router.patch('/:id', (req, res, next) => {
     image: req.body.image
   };
   db.getDb()
-  .db()
-  .collection('products')
+    .db()
+    .collection('cuoc_indice01')
     .updateOne(
       { _id: new ObjectId(req.params.id) }, 
       { $set: updatedProduct })
@@ -158,7 +103,7 @@ router.patch('/:id', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
   db.getDb()
     .db()
-    .collection('products')
+    .collection('cuoc_indice01')
     .deleteOne({ _id: new ObjectId(req.params.id)})
     .then(result => {
       res.status(200).json({ message: 'Product deleted' });
