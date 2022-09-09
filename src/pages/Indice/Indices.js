@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Products from '../../components/Products/Products';
+import Indices from '../../components/Indices/Indices';
 
-class ProductsPage extends Component {
+class IndicesPage extends Component {
   state = { isLoading: true, indices: [] };
   componentDidMount() {
     this.fetchData();
@@ -11,7 +11,7 @@ class ProductsPage extends Component {
 
   indiceDeleteHandler = indiceId => {
     axios
-      .delete('http://localhost:3200/products/' + indiceId)
+      .delete('http://localhost:3200/indices/' + indiceId)
       .then(result => {
         console.log(result);
         this.fetchData();
@@ -26,7 +26,7 @@ class ProductsPage extends Component {
 
   fetchData = () => {
     axios
-      .get('http://localhost:3200/products')
+      .get('http://localhost:3200/indices')
       .then(indicesResponse => {
         this.setState({ isLoading: false, indices: indicesResponse.data });
       })
@@ -42,7 +42,7 @@ class ProductsPage extends Component {
 
     if (!this.state.isLoading && this.state.indices.length > 0) {
       content = (
-        <Products
+        <Indices
           indices={this.state.indices}
           onDeleteindice={this.indiceDeleteHandler}
         />
@@ -55,4 +55,4 @@ class ProductsPage extends Component {
   }
 }
 
-export default ProductsPage;
+export default IndicesPage;

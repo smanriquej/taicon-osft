@@ -1,25 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './ProductItem.css';
+import './IndiceItem.css';
 
-const productItem = props => (
-  <article className="product-item">
+const indiceItem = props => (
+  <article className="indice-item">
     {/* <div
-      className="product-item__image"
+      className="indice-item__image"
       style={{ backgroundImage: "url('" + props.imageUrl + "')" }}
     /> */}
-    <div className="product-item__content">
+    <div className="indice-item__content">
       <h1>{props.cod_indice}</h1>
       <h2>{props.nombre_cuoc_indice}</h2>
       <p>{props.nombre_cuoc_indice}</p>
-      <div className="product-item__controls">
-        <Link to={'/products/' + props.id}>Details</Link>
-        <Link to={'/products/' + props.id + '/edit'}>Edit</Link>
+      <div className="indice-item__controls">
+        <Link to={'/indices/' + props.id}>Details</Link>
+        <Link to={'/indices/' + props.id + '/edit'}>Edit</Link>
         {/* <button onClick={props.onDelete.bind(this, props.id)}>Delete</button> */}
       </div>
     </div>
   </article>
 );
 
-export default productItem;
+export default indiceItem;

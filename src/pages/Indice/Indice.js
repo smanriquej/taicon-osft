@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import './Product.css';
+import './Indice.css';
 
-class ProductPage extends Component {
+class IndicePage extends Component {
   state = { isLoading: true, indice: null };
 
   componentDidMount() {
     axios
-      .get('http://localhost:3200/products/' + this.props.match.params.id)
+      .get('http://localhost:3200/indices' + this.props.match.params.id)
       .then(indiceResponse => {
         this.setState({ isLoading: false, indice: indiceResponse.data });
       })
@@ -24,11 +24,11 @@ class ProductPage extends Component {
 
     if (!this.state.isLoading && this.state.indice) {
       content = (
-        <main className="product-page">
+        <main className="indice-page">
           <h1>{this.state.indice.nombre_cuoc_indice}</h1>
           <h2>{this.state.indice.cod_indice}</h2>
           {/* <div
-            className="product-page__image"
+            className="indice-page__image"
             style={{
               backgroundImage: "url('" + this.state.indice.image + "')"
             }}
@@ -48,4 +48,4 @@ class ProductPage extends Component {
   }
 }
 
-export default ProductPage;
+export default IndicePage;

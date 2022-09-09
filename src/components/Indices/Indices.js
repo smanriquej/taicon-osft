@@ -1,13 +1,13 @@
 import React from 'react';
 
-import ProductItem from './ProductItem/ProductItem';
+import IndiceItem from './IndiceItem/IndiceItem';
 
-import './Products.css';
+import './Indices.css';
 
-const products = props => (
-  <section className="products">
+const indices = props => (
+  <section className="indices">
     {props.indices.map(p => (
-      <ProductItem
+      <IndiceItem
         key={p._id}
         id={p._id}
         cod_indice={p.cod_indice}
@@ -20,4 +20,4 @@ const products = props => (
   </section>
 );
 
-export default products;
+export default indices;

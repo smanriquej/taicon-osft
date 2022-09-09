@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const productRoutes = require('./routes/products');
+const indicesRoutes = require('./routes/indices');
 const authRoutes = require('./routes/auth');
 const db = require('./db');
 
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/products', productRoutes);
+app.use('/indices', indicesRoutes);
 app.use('/', authRoutes);
 
 db.initDb((err, db) => {

@@ -5,9 +5,9 @@ import axios from 'axios';
 import Header from './components/Header/Header';
 import Modal from './components/Modal/Modal';
 import Backdrop from './components/Backdrop/Backdrop';
-import ProductsPage from './pages/Product/Products';
-import ProductPage from './pages/Product/Product';
-import EditProductPage from './pages/Product/EditProduct';
+import IndicesPage from './pages/Indice/Indices';
+import IndicePage from './pages/Indice/Indice';
+import EditIndicePage from './pages/Indice/EditIndice';
 import AuthPage from './pages/Auth/Auth';
 
 class App extends Component {
@@ -66,31 +66,31 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
-        <Redirect from="/" to="/products" exact />
-        <Redirect from="/auth" to="/products" exact />
-        <Redirect from="/signup" to="/products" exact />
+        <Redirect from="/" to="/indices" exact />
+        <Redirect from="/auth" to="/indices" exact />
+        <Redirect from="/signup" to="/indices" exact />
         <Route
-          path="/product/:mode"
+          path="/indice/:mode"
           render={props => (
-            <EditProductPage {...props} onError={this.errorHandler} />
+            <EditIndicePage {...props} onError={this.errorHandler} />
           )}
         />
         <Route
-          path="/products/:id/:mode"
+          path="/indices/:id/:mode"
           render={props => (
-            <EditProductPage {...props} onError={this.errorHandler} />
+            <EditIndicePage {...props} onError={this.errorHandler} />
           )}
         />
         <Route
-          path="/products/:id"
+          path="/indices/:id"
           render={props => (
-            <ProductPage {...props} onError={this.errorHandler} />
+            <IndicePage {...props} onError={this.errorHandler} />
           )}
         />
         <Route
-          path="/products"
+          path="/indices"
           render={props => (
-            <ProductsPage {...props} onError={this.errorHandler} />
+            <IndicesPage {...props} onError={this.errorHandler} />
           )}
         />
       </Switch>
@@ -100,8 +100,8 @@ class App extends Component {
       routes = (
         <Switch>
           <Redirect from="/" to="/auth" exact />
-          <Redirect from="/products" to="/auth" />
-          <Redirect from="/product" to="/auth" />
+          <Redirect from="/indices" to="/auth" />
+          <Redirect from="/indice" to="/auth" />
           <Route
             path="/auth"
             render={() => (

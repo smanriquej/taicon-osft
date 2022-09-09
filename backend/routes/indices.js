@@ -137,7 +137,7 @@ router.get('/', async (req, res, next) => {
     });
 });
 
-// Get single product
+// Get single indice
 router.get('/:id', (req, res, next) => {
   db.getDb()
     .db()
@@ -153,10 +153,10 @@ router.get('/:id', (req, res, next) => {
   
 });
 
-// Add new product
+// Add new indice
 // Requires logged in user
 router.post('', (req, res, next) => {
-  const newProduct = {
+  const newIndice = {
     name: req.body.name,
     description: req.body.description,
     price: Decimal128.fromString(req.body.price.toString()), // store this as 128bit decimal in MongoDB
@@ -165,21 +165,21 @@ router.post('', (req, res, next) => {
   db.getDb()
     .db()
     .collection('cuoc_indice01')
-    .insertOne(newProduct)
+    .insertOne(newIndice)
     .then(result => {
       res
         .status(201)
-        .json({ message: 'Product added', productId: result.insertedId });
+        .json({ message: 'Indice added', indiceId: result.insertedId });
     })
     .catch(err => {
       console.log(err);
       res.status(500).json({ message: 'An error occurred.' });
     });
 });
-// Edit existing product
+// Edit existing indice
 // Requires logged in user
 router.patch('/:id', (req, res, next) => {
-  const updatedProduct = {
+  const updatedIndice = {
     name: req.body.name,
     description: req.body.description,
     price: Decimal128.fromString(req.body.price.toString()), // store this as 128bit decimal in MongoDB
@@ -190,9 +190,9 @@ router.patch('/:id', (req, res, next) => {
     .collection('cuoc_indice01')
     .updateOne(
       { _id: new ObjectId(req.params.id) }, 
-      { $set: updatedProduct })
+      { $set: updatedIndice })
   .then(result => {
-    res.status(200).json({ message: 'Product updated', productId: req.params.id });
+    res.status(200).json({ message: 'Indice updated', indiceId: req.params.id });
   })
   .catch(err => {
     console.log(err);
@@ -200,7 +200,7 @@ router.patch('/:id', (req, res, next) => {
   })
 });
 
-// Delete a product
+// Delete a indice
 // Requires logged in user
 router.delete('/:id', (req, res, next) => {
   db.getDb()
@@ -208,7 +208,7 @@ router.delete('/:id', (req, res, next) => {
     .collection('cuoc_indice01')
     .deleteOne({ _id: new ObjectId(req.params.id)})
     .then(result => {
-      res.status(200).json({ message: 'Product deleted' });
+      res.status(200).json({ message: 'Indice deleted' });
     })
     .catch(err => {
       console.log(err);

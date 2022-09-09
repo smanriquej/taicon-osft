@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import './EditProduct.css';
+import './EditIndice.css';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 
-class ProductEditPage extends Component {
+class IndiceEditPage extends Component {
   state = {
     isLoading: true,
     title: '',
@@ -18,15 +18,15 @@ class ProductEditPage extends Component {
     // Will be "edit" or "add"
     if (this.props.match.params.mode === 'edit') {
       axios
-        .get('http://localhost:3200/products/' + this.props.match.params.id)
-        .then(productResponse => {
-          const product = productResponse.data;
+        .get('http://localhost:3200/indices/' + this.props.match.params.id)
+        .then(indiceResponse => {
+          const indice = indiceResponse.data;
           this.setState({
             isLoading: false,
-            title: product.name,
-            price: product.price.toString(),
-            imageUrl: product.image,
-            description: product.description
+            title: indice.name,
+            price: indice.price.toString(),
+            imageUrl: indice.image,
+            description: indice.description
           });
         })
         .catch(err => {
@@ -38,7 +38,7 @@ class ProductEditPage extends Component {
     }
   }
 
-  editProductHandler = event => {
+  editIndiceHandler = event => {
     event.preventDefault();
     if (
       this.state.title.trim() === '' ||
@@ -49,7 +49,7 @@ class ProductEditPage extends Component {
       return;
     }
     this.setState({ isLoading: true });
-    const productData = {
+    const indiceData = {
       name: this.state.title,
       price: parseFloat(this.state.price),
       image: this.state.imageUrl,
@@ -58,22 +58,22 @@ class ProductEditPage extends Component {
     let request;
     if (this.props.match.params.mode === 'edit') {
       request = axios.patch(
-        'http://localhost:3200/products/' + this.props.match.params.id,
-        productData
+        'http://localhost:3200/indices/' + this.props.match.params.id,
+        indiceData
       );
     } else {
-      request = axios.post('http://localhost:3200/products', productData);
+      request = axios.post('http://localhost:3200/indices', indiceData);
     }
     request
       .then(result => {
         this.setState({ isLoading: false });
-        this.props.history.replace('/products');
+        this.props.history.replace('/indices');
       })
       .catch(err => {
         this.setState({ isLoading: false });
         console.log(err);
         this.props.onError(
-          'Editing or adding the product failed. Please try again later'
+          'Editing or adding the indice failed. Please try again later'
         );
       });
   };
@@ -84,7 +84,7 @@ class ProductEditPage extends Component {
 
   render() {
     let content = (
-      <form className="edit-product__form" onSubmit={this.editProductHandler}>
+      <form className="edit-indice__form" onSubmit={this.editIndiceHandler}>
         <Input
           label="Title"
           config={{ type: 'text', value: this.state.title }}
@@ -108,8 +108,8 @@ class ProductEditPage extends Component {
         />
         <Button type="submit">
           {this.props.match.params.mode === 'add'
-            ? 'Create Product'
-            : 'Update Product'}
+            ? 'Create Indice'
+            : 'Update Indice'}
         </Button>
       </form>
     );
@@ -120,4 +120,4 @@ class ProductEditPage extends Component {
   }
 }
 
-export default ProductEditPage;
+export default IndiceEditPage;
