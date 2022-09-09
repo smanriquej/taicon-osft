@@ -25,8 +25,8 @@ class ProductPage extends Component {
     if (!this.state.isLoading && this.state.indice) {
       content = (
         <main className="product-page">
-          <h1>{this.state.indice.cod_indice}</h1>
-          <h2>{this.state.indice.nombre_cuoc_indice}</h2>
+          <h1>{this.state.indice.nombre_cuoc_indice}</h1>
+          <h2>{this.state.indice.cod_indice}</h2>
           {/* <div
             className="product-page__image"
             style={{

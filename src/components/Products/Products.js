@@ -10,7 +10,7 @@ const products = props => (
       <ProductItem
         key={p._id}
         id={p._id}
-        cod_indice={p.nombre_cuoc_indice}
+        cod_indice={p.cod_indice}
         nombre_cuoc_indice={p.nombre_cuoc_indice}
         // price={p.price}
         // imageUrl={p.image}

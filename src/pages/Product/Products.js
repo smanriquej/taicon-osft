@@ -31,9 +31,9 @@ class ProductsPage extends Component {
         this.setState({ isLoading: false, indices: indicesResponse.data });
       })
       .catch(err => {
+        console.log(err);
         this.setState({ isLoading: false, indices: [] });
         this.props.onError('Loading indices failed. Please try again later');
-        console.log(err);
       });
   }
 

@@ -11,7 +11,7 @@ const productItem = props => (
     /> */}
     <div className="product-item__content">
       <h1>{props.cod_indice}</h1>
-      {/* <h2>${props.price}</h2> */}
+      <h2>{props.nombre_cuoc_indice}</h2>
       <p>{props.nombre_cuoc_indice}</p>
       <div className="product-item__controls">
         <Link to={'/products/' + props.id}>Details</Link>
