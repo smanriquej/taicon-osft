@@ -7,7 +7,7 @@ const header = props => {
   let links = (
     <ul className="main-header__nav-items">
       <li className="main-header__nav-item">
-        <NavLink to="/indice">Indice</NavLink>
+        <NavLink to="/indices">Indices</NavLink>
       </li>
       <li className="main-header__nav-item">
         <NavLink to="/indice/add">Add Indice</NavLink>

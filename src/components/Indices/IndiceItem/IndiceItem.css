@@ -1,7 +1,7 @@
 .indice-item {
   display: flex;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  height: 12.5rem;
+  /* height: 12.5rem; */
   margin: 1rem 0;
   position: relative;
 }
@@ -15,7 +15,10 @@
 }
 
 .indice-item__content {
-  width: 60%;
+  width: 95%;
+  padding-bottom: 25px;
+  padding-left: 10px;
+  text-align: justify;
 }
 
 .indice-item__content h1 {

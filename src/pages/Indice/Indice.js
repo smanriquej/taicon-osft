@@ -1,51 +1,46 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
-
 import './Indice.css';
+import Spinner from '../../components/spinner/spinner';
 
-class IndicePage extends Component {
-  state = { isLoading: true, indice: null };
+const Indice = (props) => {
+  const [indice, setIndice] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  componentDidMount() {
+  useEffect(() => {
+    const value = props.match.params.id.replace('+', '').trim();
+    const url = `http://localhost:3200/indices/${value}`;
+    // console.log('this.props.match.params.id', `http://localhost:3200/indices/${value}`);
     axios
-      .get('http://localhost:3200/indices' + this.props.match.params.id)
+      .get(url)
       .then(indiceResponse => {
-        this.setState({ isLoading: false, indice: indiceResponse.data });
+        setIsLoading(false);
+        setIndice(indiceResponse.data[0]);
+        console.log(indiceResponse.data);
+        console.log(indice);
       })
       .catch(err => {
-        this.setState({ isLoading: false });
+        setIsLoading(false);
         console.log(err);
-        this.props.onError('Loading the indice failed. Please try again later');
+        props.onError('Loading the indice failed. Please try again later');
       });
-  }
+  }, []);
 
-  render() {
-    let content = <p>Is loading...</p>;
-
-    if (!this.state.isLoading && this.state.indice) {
-      content = (
+  // const { nombre_cuoc_indice, cod_indice } = indice;
+  
+  return (
+    <Fragment>
+      {isLoading ? (
+        <Spinner />
+      ) : (
         <main className="indice-page">
-          <h1>{this.state.indice.nombre_cuoc_indice}</h1>
-          <h2>{this.state.indice.cod_indice}</h2>
-          {/* <div
-            className="indice-page__image"
-            style={{
-              backgroundImage: "url('" + this.state.indice.image + "')"
-            }}
-          /> */}
-          {/* <p>{this.state.indice.description}</p> */}
+          <h1>Código Indice: {indice.cod_indice}</h1>
+          <h2>Nombre: {indice.nombre_cuoc_indice}</h2>
+            {/* <p><b>Ocupación: </b><br />{indice.ocupacion02[0].descripcion_cupacion}</p> */}
         </main>
-      );
-    }
-    if (!this.state.isLoading && !this.state.indice) {
-      content = (
-        <main>
-          <p>Found no indice. Try again later.</p>
-        </main>
-      );
-    }
-    return content;
-  }
-}
+      )}
+    </Fragment>
+  );
+};
 
-export default IndicePage;
+export default Indice;
