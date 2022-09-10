@@ -11,7 +11,7 @@ const router = Router();
 // Get list of indiceArr indiceArr
 router.get('/', async (req, res, next) => {
   const pipeline = [
-    { $match: { cod_indice: "01100" } },
+    { $match: { cod_indice: "11200" } },
     // { $match: { _id: ObjectId("630d60caec209f450c38d55d") } },
     {
       $lookup: {
@@ -63,10 +63,10 @@ router.get('/', async (req, res, next) => {
     },
     {
       $lookup: {
-        from: 'cuoc_area_cualificacion08',
+        from: 'cuoc_ocupacion_area_cualificacion13',
         localField: 'cod_indice',
         foreignField: "ocupacion",
-        as: "area_cualificacion08"
+        as: "ocupacion_area_cualificacion13"
       }
     },
     {
@@ -89,7 +89,7 @@ router.get('/', async (req, res, next) => {
         "indice_denominacion_ocupacion": 1,
         "nombre_cuoc_indice": 1,
         "ocupacion02.cod_indice": 1,
-        "ocupacion02.descripcion_cupacion": 1,
+        "ocupacion02.descripcion_ocupacion": 1,
         "conocimiento05.id_conocimiento": 1,
         "conocimiento05.nombre_conocimiento": 1,
         "denominaciones03.denominacion": 1,
@@ -104,8 +104,8 @@ router.get('/', async (req, res, next) => {
         "funciones04.fuente_cno": 1,
         "ocupacion_afin07.ocupacion_afin": 1,
         "ocupacion_afin07.nombre_ocupacion_afin": 1,
-        "area_cualificacion08.codigo_area_cualificacion": 1,
-        "area_cualificacion08.area_cualificacion": 1,
+        "ocupacion_area_cualificacion13.codigo_area_cualificacion": 1,
+        "ocupacion_area_cualificacion13.area_cualificacion": 1,
         "equivalencia10.codigo_ciuo": 1,
         "equivalencia10.observacion_ciuo": 1,
         "equivalencia10.codigo_cno": 1,
@@ -116,16 +116,17 @@ router.get('/', async (req, res, next) => {
   ];
 
   const indiceArr = [];
-  let cont = 0;
+  // let cont = 0;
   const aggCursor = db.getDb()
     .db()
     .collection("cuoc_indice01")
     .aggregate(pipeline);
 
   await aggCursor.forEach(indiceData => {
-    cont += 1;
-    console.log("cont: ", cont);
-    console.log("indiceData", indiceData);
+    // cont += 1;
+    // console.log("cont: ", cont);
+    // console.log("indiceData", indiceData);
+    console.log("Indice..");
     indiceArr.push(indiceData);
   })
   .then(result => {
@@ -139,7 +140,6 @@ router.get('/', async (req, res, next) => {
 
 // Get single indice
 router.get('/:id', async (req, res, next) => {
-  console.log('new ObjectId(req.params.id):', new ObjectId(req.params.id));
   const pipeline = [
     { $match: { _id: new ObjectId(req.params.id) } },
     {
@@ -192,10 +192,10 @@ router.get('/:id', async (req, res, next) => {
     },
     {
       $lookup: {
-        from: 'cuoc_area_cualificacion08',
+        from: 'cuoc_ocupacion_area_cualificacion13',
         localField: 'cod_indice',
         foreignField: "ocupacion",
-        as: "area_cualificacion08"
+        as: "ocupacion_area_cualificacion13"
       }
     },
     {
@@ -218,7 +218,7 @@ router.get('/:id', async (req, res, next) => {
         "indice_denominacion_ocupacion": 1,
         "nombre_cuoc_indice": 1,
         "ocupacion02.cod_indice": 1,
-        "ocupacion02.descripcion_cupacion": 1,
+        "ocupacion02.descripcion_ocupacion": 1,
         "conocimiento05.id_conocimiento": 1,
         "conocimiento05.nombre_conocimiento": 1,
         "denominaciones03.denominacion": 1,
@@ -233,8 +233,8 @@ router.get('/:id', async (req, res, next) => {
         "funciones04.fuente_cno": 1,
         "ocupacion_afin07.ocupacion_afin": 1,
         "ocupacion_afin07.nombre_ocupacion_afin": 1,
-        "area_cualificacion08.codigo_area_cualificacion": 1,
-        "area_cualificacion08.area_cualificacion": 1,
+        "ocupacion_area_cualificacion13.codigo_area_cualificacion": 1,
+        "ocupacion_area_cualificacion13.area_cualificacion": 1,
         "equivalencia10.codigo_ciuo": 1,
         "equivalencia10.observacion_ciuo": 1,
         "equivalencia10.codigo_cno": 1,
@@ -245,20 +245,19 @@ router.get('/:id', async (req, res, next) => {
   ];
 
   const indiceArr = [];
-  let cont = 0;
+  // let cont = 0;
   const aggCursor = db.getDb()
     .db()
     .collection("cuoc_indice01")
     .aggregate(pipeline);
 
   await aggCursor.forEach(indiceData => {
-    cont += 1;
-    // console.log("cont: ", cont);
+    // cont += 1;
+    console.log("Detail..");
     // console.log("indiceData", indiceData);
     indiceArr.push(indiceData);
   })
   .then(result => {
-    console.log('find one', indiceArr);
     res.status(200).json(indiceArr);
   })
   .catch(err => {

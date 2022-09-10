@@ -1,44 +1,34 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import './EditIndice.css';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 
-class IndiceEditPage extends Component {
-  state = {
-    isLoading: true,
-    title: '',
-    price: '',
-    imageUrl: '',
-    description: ''
-  };
+import './EditIndicePage.css';
 
-  componentDidMount() {
+const EditIndicePage = (props) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [title, setTitle] = useState('');
+  
+  useEffect(() => {
     // Will be "edit" or "add"
-    if (this.props.match.params.mode === 'edit') {
+    if (props.match.params.mode === 'edit') {
       axios
         .get('http://localhost:3200/indices/' + this.props.match.params.id)
         .then(indiceResponse => {
           const indice = indiceResponse.data;
-          this.setState({
-            isLoading: false,
-            title: indice.name,
-            price: indice.price.toString(),
-            imageUrl: indice.image,
-            description: indice.description
-          });
+          setTitle(indice.name);
         })
         .catch(err => {
-          this.setState({ isLoading: false });
+          setIsLoading(false);
           console.log(err);
         });
     } else {
-      this.setState({ isLoading: false });
+        setIsLoading(false);
     }
-  }
+  }, []);
 
-  editIndiceHandler = event => {
+  const editIndiceHandler = event => {
     event.preventDefault();
     if (
       this.state.title.trim() === '' ||
@@ -48,17 +38,18 @@ class IndiceEditPage extends Component {
     ) {
       return;
     }
-    this.setState({ isLoading: true });
+        setIsLoading(true);
+
     const indiceData = {
-      name: this.state.title,
-      price: parseFloat(this.state.price),
-      image: this.state.imageUrl,
-      description: this.state.description
+      name: title,
+      // price: parseFloat(this.state.price),
+      // image: this.state.imageUrl,
+      // description: this.state.description
     };
     let request;
-    if (this.props.match.params.mode === 'edit') {
+    if (props.match.params.mode === 'edit') {
       request = axios.patch(
-        'http://localhost:3200/indices/' + this.props.match.params.id,
+        'http://localhost:3200/indices/' + props.match.params.id,
         indiceData
       );
     } else {
@@ -66,31 +57,30 @@ class IndiceEditPage extends Component {
     }
     request
       .then(result => {
-        this.setState({ isLoading: false });
-        this.props.history.replace('/indices');
+        setIsLoading(false);
+        props.history.replace('/indices');
       })
       .catch(err => {
-        this.setState({ isLoading: false });
+        setIsLoading(false);
         console.log(err);
-        this.props.onError(
+        props.onError(
           'Editing or adding the indice failed. Please try again later'
         );
       });
   };
 
-  inputChangeHandler = (event, input) => {
-    this.setState({ [input]: event.target.value });
+  const inputChangeHandler = (event, input) => {
+    // this.setState({ [input]: event.target.value });
   };
 
-  render() {
-    let content = (
-      <form className="edit-indice__form" onSubmit={this.editIndiceHandler}>
+  let content = (
+      <form className="edit-indice__form" onSubmit={editIndiceHandler}>
         <Input
           label="Title"
-          config={{ type: 'text', value: this.state.title }}
-          onChange={event => this.inputChangeHandler(event, 'title')}
+          config={{ type: 'text', value: title }}
+          onChange={event => inputChangeHandler(event, 'title')}
         />
-        <Input
+        {/* <Input
           label="Price"
           config={{ type: 'number', value: this.state.price }}
           onChange={event => this.inputChangeHandler(event, 'price')}
@@ -105,9 +95,9 @@ class IndiceEditPage extends Component {
           elType="textarea"
           config={{ rows: '5', value: this.state.description }}
           onChange={event => this.inputChangeHandler(event, 'description')}
-        />
+        /> */}
         <Button type="submit">
-          {this.props.match.params.mode === 'add'
+          {props.match.params.mode === 'add'
             ? 'Create Indice'
             : 'Update Indice'}
         </Button>
@@ -116,8 +106,10 @@ class IndiceEditPage extends Component {
     if (this.state.isLoading) {
       content = <p>Is loading...</p>;
     }
-    return <main>{content}</main>;
-  }
-}
 
-export default IndiceEditPage;
+  return (
+    <main>{content}</main>
+  );
+};
+
+export default EditIndicePage;

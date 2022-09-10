@@ -5,9 +5,9 @@ import axios from 'axios';
 import Header from './components/Header/Header';
 import Modal from './components/Modal/Modal';
 import Backdrop from './components/Backdrop/Backdrop';
-import IndicesPage from './pages/Indice/Indices';
-import IndicePage from './pages/Indice/Indice';
-import EditIndicePage from './pages/Indice/EditIndice';
+import IndicesPage from './pages/Indice/IndicesPage';
+import IndicePage from './pages/Indice/IndicePage';
+import EditIndicePage from './pages/Indice/EditIndicePage';
 import AuthPage from './pages/Auth/Auth';
 
 class App extends Component {
@@ -115,6 +115,11 @@ class App extends Component {
         </Switch>
       );
     }
+
+    console.log("isAuth", this.state.isAuth);
+    console.log("authMode", this.state.authMode);
+    console.log("error", this.state.error);
+    console.log("routes", routes);
 
     return (
       <div className="App">
