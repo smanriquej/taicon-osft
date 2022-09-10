@@ -6,10 +6,12 @@ import Indices from '../../components/Indices/Indices.component';
 const IndicesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [indices, setIndices] = useState([]);
-
+  const [filter, setFilter] = useState([]);
 
   useEffect(() => {
+    fetchFilter();
     fetchData();
+    // console.log("filter",filter);
   }, []);
 
   const indiceDeleteHandler = (indiceId) => {
@@ -27,18 +29,34 @@ const IndicesPage = () => {
       });
   };
 
-  const fetchData = () => {
+const fetchData = () => {
+  axios
+    .get('http://localhost:3200/indices')
+    .then(indicesResponse => {
+      setIndices(indicesResponse.data);
+      setIsLoading(false);
+    })
+    .catch(err => {
+      console.log(err);
+      setIndices([]);
+      setIsLoading(false);
+      this.props.onError('Loading indices failed. Please try again later');
+    });
+  }
+
+  const fetchFilter = () => {
     axios
-      .get('http://localhost:3200/indices')
+      .get('http://localhost:3200/indicesFilter')
       .then(indicesResponse => {
-        setIndices(indicesResponse.data);
+        console.log("filter",indicesResponse);
+        setFilter(indicesResponse.data);
         setIsLoading(false);
       })
       .catch(err => {
         console.log(err);
-        setIndices([]);
+        setFilter([]);
         setIsLoading(false);
-        this.props.onError('Loading indices failed. Please try again later');
+        this.props.onError('Loading filter failed. Please try again later');
       });
   }
 
@@ -50,6 +68,7 @@ const IndicesPage = () => {
           indices.length > 0 ? (
           <Indices
           indices={indices}
+          filter={filter}
           onDeleteindice={indiceDeleteHandler}
         /> 
         ) : ( 

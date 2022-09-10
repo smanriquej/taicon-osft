@@ -168,6 +168,14 @@ router.get('/:id', async (req, res, next) => {
     },
     {
       $lookup: {
+        from: 'cuoc_ocupacion_destreza12',
+        localField: 'cod_indice',
+        foreignField: "ocupacion",
+        as: "ocupacionDestreza12"
+      }
+    },
+    {
+      $lookup: {
         from: 'cuoc_destreza06',
         localField: 'cod_indice',
         foreignField: "ocupacion",
