@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 import Indices from '../../components/Indices/Indices.component';
@@ -7,12 +7,21 @@ const IndicesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [indices, setIndices] = useState([]);
   const [filter, setFilter] = useState([]);
+  const [ocupacionSelected, setOcupacionSelected] = useState('');
 
   useEffect(() => {
     fetchFilter();
-    fetchData();
-    // console.log("filter",filter);
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [ocupacionSelected]);
+
+  const handler = useCallback(
+    (event) => {
+      setOcupacionSelected(event.target.value);
+    },
+  );
 
   const indiceDeleteHandler = (indiceId) => {
     axios
@@ -30,8 +39,10 @@ const IndicesPage = () => {
   };
 
 const fetchData = () => {
-  axios
-    .get('http://localhost:3200/indices')
+  if (ocupacionSelected !== '' && ocupacionSelected !== "-1"){
+    const url = `http://localhost:3200/indices/${ocupacionSelected}`;
+    axios
+    .get(url)
     .then(indicesResponse => {
       setIndices(indicesResponse.data);
       setIsLoading(false);
@@ -43,12 +54,12 @@ const fetchData = () => {
       this.props.onError('Loading indices failed. Please try again later');
     });
   }
+};
 
   const fetchFilter = () => {
     axios
       .get('http://localhost:3200/indicesFilter')
       .then(indicesResponse => {
-        console.log("filter",indicesResponse);
         setFilter(indicesResponse.data);
         setIsLoading(false);
       })
@@ -58,10 +69,18 @@ const fetchData = () => {
         setIsLoading(false);
         this.props.onError('Loading filter failed. Please try again later');
       });
-  }
+  };
 
   return (
     <main>
+      <div className="form-group">
+        <select className='form-control' defaultValue={"-1"} onChange={(event)=> handler(event)} >
+          <option key="-1" value="-1" disabled hidden>Seleccione una ocupación..</option>
+          {filter.map(indiceItem => (
+            <option key={indiceItem._id} value={indiceItem._id}>{indiceItem.cod_indice} - {indiceItem.nombre_cuoc_indice}</option>
+          ))}
+          </select>
+      </div>
       {isLoading ? (
       <p>Loading indices...</p>
         ) : ( 
@@ -69,10 +88,10 @@ const fetchData = () => {
           <Indices
           indices={indices}
           filter={filter}
-          onDeleteindice={indiceDeleteHandler}
+          handler={handler}
         /> 
         ) : ( 
-          <p>Found no indices. Try again later.</p>
+          <p>Seleccione una ocupación.</p>
         ))}
     </main>
   );
