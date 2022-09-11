@@ -2,10 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 import Indices from '../../components/Indices/Indices.component';
+import IndiceDetail from '../../components/Indices/IndiceDetail.component';
 
 const IndicesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [indices, setIndices] = useState([]);
+  const [indice, setIndice] = useState(null);
   const [filter, setFilter] = useState([]);
   const [ocupacionSelected, setOcupacionSelected] = useState('');
 
@@ -44,12 +45,12 @@ const fetchData = () => {
     axios
     .get(url)
     .then(indicesResponse => {
-      setIndices(indicesResponse.data);
+      setIndice(indicesResponse.data[0]);
       setIsLoading(false);
     })
     .catch(err => {
       console.log(err);
-      setIndices([]);
+      setIndice({});
       setIsLoading(false);
       this.props.onError('Loading indices failed. Please try again later');
     });
@@ -84,12 +85,13 @@ const fetchData = () => {
       {isLoading ? (
       <p>Loading indices...</p>
         ) : ( 
-          indices.length > 0 ? (
-          <Indices
-          indices={indices}
-          filter={filter}
-          handler={handler}
-        /> 
+          indice !== null ? (
+        //   <Indices
+        //   indices={indices}
+        //   filter={filter}
+        //   handler={handler}
+        // /> 
+        <IndiceDetail indice={indice}/>
         ) : ( 
           <p>Seleccione una ocupación.</p>
         ))}
