@@ -28,9 +28,9 @@ const App = () => {
 
     let request;
     if (authMode === 'login') {
-      request = axios.post('https://admirable-starship-8a726e.netlify.app/.netlify/functions/login', authData);
+      request = axios.post('https://backend-taicon-osft.netlify.app/.netlify/functions/login', authData);
     } else {
-      request = axios.post('https://admirable-starship-8a726e.netlify.app/.netlify/functions/signup', authData);
+      request = axios.post('https://backend-taicon-osft.netlify.app/.netlify/functions/signup', authData);
     }
     request
       .then(authResponse => {
