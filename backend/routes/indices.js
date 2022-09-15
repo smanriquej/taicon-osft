@@ -126,7 +126,6 @@ router.get('/', async (req, res, next) => {
     // cont += 1;
     // console.log("cont: ", cont);
     // console.log("indiceData", indiceData);
-    console.log("OJO... Indice!!!");
     indiceArr.push(indiceData);
   })
   .then(result => {
@@ -266,6 +265,7 @@ router.get('/:id', async (req, res, next) => {
     indiceArr.push(indiceData);
   })
   .then(result => {
+    
     res.status(200).json(indiceArr);
   })
   .catch(err => {
