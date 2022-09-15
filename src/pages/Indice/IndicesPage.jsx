@@ -26,7 +26,7 @@ const IndicesPage = () => {
 
   const indiceDeleteHandler = (indiceId) => {
     axios
-      .delete('http://localhost:3200/indices/' + indiceId)
+      .delete('https://admirable-starship-8a726e.netlify.app/.netlify/functions/indices/' + indiceId)
       .then(result => {
         console.log(result);
         this.fetchData();
@@ -41,7 +41,7 @@ const IndicesPage = () => {
 
 const fetchData = () => {
   if (ocupacionSelected !== '' && ocupacionSelected !== "-1"){
-    const url = `http://localhost:3200/indices/${ocupacionSelected}`;
+    const url = `https://admirable-starship-8a726e.netlify.app/.netlify/functions/indices/${ocupacionSelected}`;
     axios
     .get(url)
     .then(indicesResponse => {
@@ -59,7 +59,7 @@ const fetchData = () => {
 
   const fetchFilter = () => {
     axios
-      .get('http://localhost:3200/indicesFilter')
+      .get('https://admirable-starship-8a726e.netlify.app/.netlify/functions/indicesFilter')
       .then(indicesResponse => {
         setFilter(indicesResponse.data);
         setIsLoading(false);

@@ -28,9 +28,9 @@ class App extends Component {
     }
     let request;
     if (this.state.authMode === 'login') {
-      request = axios.post('http://localhost:3200/login', authData);
+      request = axios.post('https://admirable-starship-8a726e.netlify.app/.netlify/functions/login', authData);
     } else {
-      request = axios.post('http://localhost:3200/signup', authData);
+      request = axios.post('https://admirable-starship-8a726e.netlify.app/.netlify/functions/signup', authData);
     }
     request
       .then(authResponse => {

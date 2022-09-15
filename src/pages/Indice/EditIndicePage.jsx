@@ -14,7 +14,7 @@ const EditIndicePage = (props) => {
     // Will be "edit" or "add"
     if (props.match.params.mode === 'edit') {
       axios
-        .get('http://localhost:3200/indices/' + this.props.match.params.id)
+        .get('https://admirable-starship-8a726e.netlify.app/.netlify/functions/indices/' + this.props.match.params.id)
         .then(indiceResponse => {
           const indice = indiceResponse.data;
           setTitle(indice.name);
@@ -49,11 +49,11 @@ const EditIndicePage = (props) => {
     let request;
     if (props.match.params.mode === 'edit') {
       request = axios.patch(
-        'http://localhost:3200/indices/' + props.match.params.id,
+        'https://admirable-starship-8a726e.netlify.app/.netlify/functions/indices/' + props.match.params.id,
         indiceData
       );
     } else {
-      request = axios.post('http://localhost:3200/indices', indiceData);
+      request = axios.post('https://admirable-starship-8a726e.netlify.app/.netlify/functions/indices', indiceData);
     }
     request
       .then(result => {

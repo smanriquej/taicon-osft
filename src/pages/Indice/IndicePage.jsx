@@ -25,7 +25,7 @@ const IndicePage = (props) => {
   useEffect(() => {
     // console.log('Entro.......', props.match.params.id);
     const value = props.match.params.id.replace('+', '').trim();
-    const url = `http://localhost:3200/indices/${value}`;
+    const url = `https://admirable-starship-8a726e.netlify.app/.netlify/functions/indices/${value}`;
     axios
       .get(url)
       .then(indiceResponse => {
