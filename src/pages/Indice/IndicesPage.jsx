@@ -90,6 +90,7 @@ const IndicesPage = () => {
 
   return (
     <main>
+      <hr/>
       <div className="form-group">
         <Select
           placeholder="Seleccione una ocupación..."
