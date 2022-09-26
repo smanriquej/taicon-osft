@@ -39,15 +39,15 @@ const IndiceDetail = ({ indice }) => {
   //       case "ocupacion_area_cualificacion13":
   //         setAreCualificacion(indice[i]);
   //         break;
-        
+
   //       case "area_cualificacion08":
   //         setAreCualificacion(indice[i]);
   //         break;
-        
+
   //       case "funciones04":
   //         setFunciones(indice[i]);
   //         break;
-        
+
   //       case "ocupacion_afin07":
   //         setOcupacionAfin(indice[i]);
   //         break;
@@ -62,8 +62,13 @@ const IndiceDetail = ({ indice }) => {
 
   return (
     <div>
-      <h1>Código Indice: {indice.cod_indice}</h1>
-      <h2>Nombre de la ocupación: {indice.nombre_cuoc_indice}</h2>
+      <h1>
+        {/* Código Indice:  */}
+        {indice.cod_indice}</h1>
+      <h2>
+        {/* Nombre de la ocupación:  */}
+        {indice.nombre_cuoc_indice}</h2>
+        <br />
       <div>
         <b>Indice gran grupo: </b>{indice.indice_gran_grupo}<br />
         <b>Indice subgrupo principal: </b>{indice.indice_subgrupo_ppal}<br />
@@ -76,7 +81,7 @@ const IndiceDetail = ({ indice }) => {
         <br />
         <b>Area cualificacion: </b>{Array.isArray(areaCualificacion) ? (areaCualificacion).map((item) => { return <AreaCualificacion key={item.codigo_area_cualificacion} area={item} /> }) : "error desplegando areas de conocimiento, intente mas tarde.."} <br />
         <br />
-        <b>Conocimientos:</b>{Array.isArray(conocimiento) ? (conocimiento).map((item) => { return <Conocimiento key={item.id_conocimiento} conocimiento={item} /> } ) : "error desplegando conocimiento, intente mas tarde.." } <br />
+        <b>Conocimientos:</b>{Array.isArray(conocimiento) ? (conocimiento).map((item) => { return <Conocimiento key={item.id_conocimiento} conocimiento={item} /> }) : "error desplegando conocimiento, intente mas tarde.."} <br />
         <br />
         <b>Funciones:</b>{Array.isArray(funciones) ? (funciones).map((item) => { return <Funciones key={item.consecutivo_funcion} funcion={item} /> }) : "error desplegando funciones, intente mas tarde.."} <br />
         <br />

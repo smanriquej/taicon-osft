@@ -46,7 +46,7 @@ const IndicesPage = () => {
   };
 
   const fetchData = () => {
-    if (ocupacionSelected !== '' && ocupacionSelected !== "-1"){
+    if (ocupacionSelected !== '' && ocupacionSelected !== "-1") {
       const url = `https://app-osft-taicon.herokuapp.com/indices/${ocupacionSelected}`;
       axios
         .get(url)
@@ -79,20 +79,20 @@ const IndicesPage = () => {
   };
 
   const customFilter = (option, searchText) => {
-     if (
-       option.label.toLowerCase().includes(searchText.toLowerCase())
-     ) {
-       return true;
-     } else {
-       return false;
-     }
+    if (
+      option.label.toLowerCase().includes(searchText.toLowerCase())
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
     <main>
-      <hr/>
+      <br />
       <div className="form-group">
-        <Select
+        <Select className="search-index"
           placeholder="Seleccione una ocupación..."
           getOptionLabel={option =>
             `${option.cod_indice} - ${option.nombre_cuoc_indice}`
@@ -104,6 +104,7 @@ const IndicesPage = () => {
           onChange={(event) => handler(event)}
           options={filter} />
       </div>
+      <br />
       {isLoading ? (
         <p>Loading indices...</p>
       ) : (
@@ -113,7 +114,7 @@ const IndicesPage = () => {
           //   filter={filter}
           //   handler={handler}
           // /> 
-          <IndiceDetail indice={indice}/>
+          <IndiceDetail indice={indice} />
         ) : (
           <p>Seleccione una ocupación.</p>
         ))}

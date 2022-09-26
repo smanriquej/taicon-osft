@@ -35,9 +35,9 @@
 .main-header__nav-item a:hover,
 .main-header__nav-item a:active,
 .main-header__nav-item a.active {
-  background: #6200ff;
+  background: #00276c;
   border-radius: 5px;
-  color: white;
+  color: whitesmoke;
 }
 
 .main-header__nav-item button {
@@ -46,12 +46,12 @@
   border: none;
   background: transparent;
   padding: 0.25rem 0.5rem;
-  color: #f84d8e;
+  color: #96b3ff;
 }
 
 .main-header__nav-item button:hover,
 .main-header__nav-item button:active {
-  background: #f84d8e;
+  background: #00003d;
   border-radius: 5px;
   color: white;
 }
